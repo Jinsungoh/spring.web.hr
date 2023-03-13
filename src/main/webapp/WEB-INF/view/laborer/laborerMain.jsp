@@ -29,33 +29,35 @@
 
     function listLaborers() {
         $('input').not(':radio').val('')
+        $('#laborers').empty()
 
         $.ajax({
-        	url: 'laborer/list',
-        	success: laborerList => {
-		        if(laborerList.length) {
-		            laborers = []
-		            laborerList.forEach(laborer => {
-						laborers.unshift(
-								'<tr><td>' +
-									'<input type="radio" value="' + laborer.laborerId +
-										'" id="laborerId" name="laborerId"/>' + '</td><td>' +
-									laborer.laborerId + '</td><td>' +
-									laborer.laborerName + '</td><td>' +
-									laborer.hireDate +
-								'</td></tr>')
-					})
-		
-        			$('#laborers').empty()
-		            $('#laborers').append(laborers.join(''))
-		        } else $('#laborers').append(
-		            `<tr><td colspan='4' class='text-center'>노동자가 없습니다.</td></tr>`
-		        )
-        	}
+           url: 'laborer/list',
+           success: laborerList => {
+              if(laborerList.length) {
+                  const laborers = []
+                  laborerList.forEach(laborer => {
+                  laborers.unshift(
+                        '<tr><td>' +
+                           '<input type="radio" value="' + 
+                           laborer.laborerId +
+                           '" id="laborerId" name="laborerId"/>' + 
+                           '</td><td>' +
+                           laborer.laborerId + '</td><td>' +
+                           laborer.laborerName + '</td><td>' +
+                           laborer.hireDate +
+                        '</td></tr>')
+               })
+                 
+                  $('#laborers').append(laborers.join(''))
+                  
+              }  else $('#laborers').append(
+                '<tr><td colspan=4 class=text-center>노동자가 없습니다.</td></tr>')
+           }
         })
     }
-
-    function init() {
+    
+    	$(()=>{  	
         listLaborers()
         
         //노동자 추가
@@ -114,14 +116,11 @@
            	$.ajax({
            		url: 'laborer/del/' + $('#laborerId:checked').val(),
            		method: 'delete',
-           		success: listLaborers
-           	})
-        	
-            $('#modal').modal('hide')
+           		success: listLaborers          	
+           	})    
+           	 $('#modal').modal('hide')
         })
-    }
-
-   $(init)
+    })
 </script>
 </head>
 <body>

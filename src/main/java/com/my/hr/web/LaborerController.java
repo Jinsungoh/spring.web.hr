@@ -35,7 +35,7 @@ public class LaborerController {
 		return laborerService.getLaborers();
 	}
 	
-	@PostMapping("add{laborerName}/{hireDate}")
+	@PostMapping("add/{laborerName}/{hireDate}")
 	public void addLaborer(@PathVariable("laborerName") String laborerName,
 							@PathVariable("hireDate") LocalDate hireDate) {
 		laborerService.addLaborer(laborerName,hireDate);
