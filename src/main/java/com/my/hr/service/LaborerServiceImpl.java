@@ -1,5 +1,6 @@
 package com.my.hr.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.my.hr.dao.LaborerDao;
 import com.my.hr.domain.Laborer;
 
-@Service("com.my.hr.laborerService")
+@Service
 public class LaborerServiceImpl implements LaborerService{
 	@Autowired private LaborerDao laborerDao;
 	
@@ -18,8 +19,8 @@ public class LaborerServiceImpl implements LaborerService{
 	}
 	
 	@Override
-	public  void addLaborer(Laborer laborer) {
-		laborerDao.insertLaborer(laborer);
+	public void addLaborer(String laborerName,LocalDate hireDate) {
+		laborerDao.insertLaborer(laborerName,hireDate);
 	}
 	
 	@Override

@@ -1,5 +1,6 @@
 package com.my.hr.web;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,34 +17,37 @@ import org.springframework.web.servlet.ModelAndView;
 import com.my.hr.domain.Laborer;
 import com.my.hr.service.LaborerService;
 
-@RestController("com.my.hr.laborerController")
-@RequestMapping("com/my/hr/laborer")
+
+
+@RestController
+@RequestMapping("laborer")
 public class LaborerController {
 	@Autowired private LaborerService laborerService;
 	
 	@GetMapping
 	public ModelAndView main(ModelAndView mv) {
-		mv.setViewName("com/my/hr/main");
+		mv.setViewName("laborer/laborerMain");
 		return mv;
 	}
 	
 	@GetMapping("list")
-	public List<Laborer> getlaborer(){
+	public List<Laborer> getLaborer(){
 		return laborerService.getLaborers();
 	}
 	
-	@PostMapping("add")
-	public void addlaborer(@RequestBody Laborer laborer) {
-		laborerService.addLaborer(laborer);
+	@PostMapping("add{laborerName}/{hireDate}")
+	public void addLaborer(@PathVariable("laborerName") String laborerName,
+							@PathVariable("hireDate") LocalDate hireDate) {
+		laborerService.addLaborer(laborerName,hireDate);
 	}
 	
 	@PutMapping("fix")
-	public void fixlaborer(@RequestBody Laborer laborer) {
+	public void fixLaborer(@RequestBody Laborer laborer) {
 		laborerService.fixLaborer(laborer);
 	}
 	
 	@DeleteMapping("del/{laborerId}")
-	public void dellaborer(@PathVariable int laborerId) {
+	public void delLaborer(@PathVariable int laborerId) {
 		laborerService.delLaborer(laborerId);
 	}
 }
